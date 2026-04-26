@@ -1221,7 +1221,7 @@ iptables_panel() {
 add_swap() {
 	local new_swap=$1  # 获取传入的参数
 
-	# 取得目前系統中所有的 swap 分區
+	# 取得目前系統中所有的 swap 分割區
 	local swap_partitions=$(grep -E '^/dev/' /proc/swaps | awk '{print $1}')
 
 	# 遍歷並刪除所有的 swap 分割區
@@ -1492,7 +1492,7 @@ ssl_ps
 
 ssl_ps() {
 	echo -e "${gl_huang}已申請的證書到期情況${gl_bai}"
-	echo "站點資訊 證書到期時間"
+	echo "網站資訊 證書到期時間"
 	echo "------------------------"
 	for cert_dir in /etc/letsencrypt/live/*; do
 	  local cert_file="$cert_dir/fullchain.pem"
@@ -1563,7 +1563,7 @@ certs_status() {
 
 			mkdir -p /home/web/certs
 
-			# 1. 输入证书 (ECC 和 RSA 证书开头都是 BEGIN CERTIFICATE)
+			# 1. 輸入憑證 (ECC 和 RSA 憑證開頭都是 BEGIN CERTIFICATE)
 			echo "請貼上 證書 (CRT/PEM) 內容 (以兩次回車結束)："
 			local cert_content=""
 			while IFS= read -r line; do
@@ -3213,7 +3213,7 @@ f2b_sshd() {
 	fi
 }
 
-# 基礎參數配置：封禁時長(bantime)、時間視窗(findtime)、重試次數(maxretry)
+# 基础参数配置：封禁时长(bantime)、时间窗口(findtime)、重试次数(maxretry)
 # 說明：
 # - 優先寫入 /etc/fail2ban/jail.d/sshd.local（覆蓋預設 jail 配置，升級不易丟）
 # - 若是 Alpine 且 jail 名稱不同，仍寫 sshd.local；Fail2Ban 會以 jail 名稱配對
@@ -3884,7 +3884,7 @@ ldnmp_web_status() {
 			2)
 				send_stats "克隆站點域名"
 				read -e -p "請輸入舊網域名稱:" oddyuming
-				read -e -p "請輸入新網域:" yuming
+				read -e -p "請輸入新網域名稱:" yuming
 				install_certbot
 				install_ssltls
 				certs_status
@@ -3925,7 +3925,7 @@ ldnmp_web_status() {
 				send_stats "建立關聯站點"
 				echo -e "為現有的站點再關聯一個新網域用於訪問"
 				read -e -p "請輸入現有的網域名稱:" oddyuming
-				read -e -p "請輸入新網域:" yuming
+				read -e -p "請輸入新網域名稱:" yuming
 				install_certbot
 				install_ssltls
 				certs_status
@@ -4190,7 +4190,7 @@ list_forwarding_services() {
 	local config_file="$1"
 
 	# 列印表頭
-	printf "%-20s %-25s %-30s %-10s\n" "服務名稱" "內部網路位址" "外網位址" "協定"
+	printf "%-20s %-25s %-30s %-10s\n" "服務名稱" "内网地址" "外網位址" "協定"
 
 	awk '
 	BEGIN {
@@ -4779,7 +4779,7 @@ mkdir -p /etc/sysctl.d
 echo "net.core.default_qdisc=fq" > "$CONF"
 echo "net.ipv4.tcp_congestion_control=bbr" >> "$CONF"
 
-# 清理可能導致衝突的舊版 sysctl.conf 殘留
+# 清理可能導致衝突的舊版本 sysctl.conf 殘留
 sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf 2>/dev/null
 sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf 2>/dev/null
 
@@ -5720,7 +5720,7 @@ elrepo_install() {
 	# 檢測系統版本
 	local os_version=$(rpm -q --qf "%{VERSION}" $(rpm -qf /etc/os-release) 2>/dev/null | awk -F '.' '{print $1}')
 	local os_name=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
-	# 確保我們在一個支援的作業系統上運行
+	# 确保我们在一个支持的操作系统上运行
 	if [[ "$os_name" != *"Red Hat"* && "$os_name" != *"AlmaLinux"* && "$os_name" != *"Rocky"* && "$os_name" != *"Oracle"* && "$os_name" != *"CentOS"* ]]; then
 		echo "不支援的作業系統：$os_name"
 		break_end
@@ -5859,7 +5859,7 @@ clamav_scan() {
 	mkdir -p /home/docker/clamav/log/ > /dev/null 2>&1
 	> /home/docker/clamav/log/scan.log > /dev/null 2>&1
 
-	# 執行 Docker 命令
+	# 执行 Docker 命令
 	docker run --rm \
 		--name clamav \
 		--mount source=clam_db,target=/var/lib/clamav \
@@ -6299,7 +6299,7 @@ Kernel_optimize() {
 	  echo -e "4. 直播最佳化模式： 針對直播推流優化，UDP 緩衝區加大，減少延遲。"
 	  echo -e "5. 遊戲服最佳化模式： 針對遊戲伺服器最佳化，低延遲優先。"
 	  echo -e "6. 還原預設設定： 將系統設定還原為預設配置。"
-	  echo -e "7. 自動調優： 依測試資料自動調優核心參數。${gl_huang}★${gl_bai}"
+	  echo -e "7. 自动调优：           根据测试数据自动调优内核参数。${gl_huang}★${gl_bai}"
 	  echo "--------------------"
 	  echo "0. 返回上一級選單"
 	  echo "--------------------"
@@ -6604,7 +6604,7 @@ create_backup() {
 	echo "- 備份單一目錄: /var/www"
 	echo "- 備份多個目錄: /etc /home /var/log"
 	echo "- 直接回車將使用預設目錄 (/etc /usr /home)"
-	read -e -p "請輸入要備份的目錄（多個目錄以空格分隔，直接回車則使用預設目錄）：" input
+	read -e -p "请输入要备份的目录（多个目录用空格分隔，直接回车则使用默认目录）：" input
 
 	# 如果使用者沒有輸入目錄，則使用預設目錄
 	if [ -z "$input" ]; then
@@ -7126,7 +7126,7 @@ add_task() {
 	send_stats "新增同步任務"
 	echo "建立新同步任務範例："
 	echo "- 任務名稱: backup_www"
-	echo "- 本機目錄: /var/www"
+	echo "  - 本地目录: /var/www"
 	echo "- 遠端位址: user@192.168.1.100"
 	echo "- 遠端目錄: /backup/www"
 	echo "- 連接埠號碼 (預設 22)"
@@ -7455,7 +7455,7 @@ linux_info() {
 
 	local swap_info=$(free -m | awk 'NR==3{used=$3; total=$2; if (total == 0) {percentage=0} else {percentage=used*100/total}; printf "%dM/%dM (%d%%)", used, total, percentage}')
 
-	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1 % 3600) / 60); if (run_days > 0) printf("%d天 ", run_days); if (run_hours > 0) printf("%d时 ", run_hours); printf("%d分\n", run_minutes)}')
+	local runtime=$(cat /proc/uptime | awk -F. '{run_days=int($1 / 86400);run_hours=int(($1 % 86400) / 3600);run_minutes=int(($1% 3600) / 60); if (run_days > 0) printf("%d天 ", run_days); if (run_hours > 0) printf("%d時 ", run_hours); printf("%d分\n", run_minutes)}')
 
 	local timezone=$(current_timezone)
 
@@ -10058,7 +10058,7 @@ moltbot_menu() {
 
 		echo "🔍 正在獲取$provider_name的所有可用模型..."
 
-		# 取得模型列表
+		# 获取模型列表
 		local models_json=$(curl -s -m 10 \
 			-H "Authorization: Bearer $api_key" \
 			"${base_url}/models")
@@ -10163,7 +10163,7 @@ EOF
 
 	add-openclaw-provider-interactive() {
 		send_stats "新增API"
-		echo "=== 互動式加入 OpenClaw Provider (全量模型) ==="
+		echo "=== 交互式添加 OpenClaw Provider (全量模型) ==="
 
 		# 1. Provider 名稱
 		read -erp "請輸入 Provider 名稱 (如: deepseek):" provider_name
@@ -10281,7 +10281,7 @@ EOF
 
 			fi
 
-			# 2. 验证输入是否为空
+			# 2. 驗證輸入是否為空
 			if [ -z "$model" ]; then
 				echo "錯誤：模型名稱不能為空。請重試。"
 				echo "" # 换行美化
@@ -10462,7 +10462,7 @@ EOF
 				echo "✅ 技能$skill_name安裝成功。"
 				start_gateway
 			else
-				echo "❌ 安裝失敗。请检查技能名称是否正确，或参考文档排查。"
+				echo "❌ 安裝失敗。請檢查技能名稱是否正確，或參考文件排查。"
 			fi
 
 			break_end
@@ -10596,7 +10596,7 @@ EOF
 
 		domains=$(openclaw_find_webui_domain)
 		if [ -n "$domains" ]; then
-			echo "網域地址："
+			echo "網域名稱地址："
 			echo "$domains" | while read d; do
 				echo "https://${d}/#token=${token}"
 			done
@@ -10717,7 +10717,7 @@ EOF
 				break_end
 			 	;;
 			13) openclaw_webui_menu ;;
-			14) send_stats "TUI命令列對話"
+			14) send_stats "TUI命令行对话"
 				openclaw tui
 				break_end
 			 	;;
@@ -10826,7 +10826,7 @@ while true; do
 	  echo -e "${gl_kjlan}97.  ${color97}WireGuard組網(服務端)${gl_kjlan}98.  ${color98}WireGuard組網(客戶端)"
 	  echo -e "${gl_kjlan}99.  ${color99}DSM群暉虛擬機${gl_kjlan}100. ${color100}Syncthing點對點檔案同步工具"
 	  echo -e "${gl_kjlan}-------------------------"
-	  echo -e "${gl_kjlan}101. ${color101}AI影片產生工具${gl_kjlan}102. ${color102}VoceChat多人線上聊天系統"
+	  echo -e "${gl_kjlan}101. ${color101}AI影片生成工具${gl_kjlan}102. ${color102}VoceChat多人線上聊天系統"
 	  echo -e "${gl_kjlan}103. ${color103}Umami網站統計工具${gl_kjlan}104. ${color104}Stream四層代理轉送工具"
 	  echo -e "${gl_kjlan}105. ${color105}思源筆記${gl_kjlan}106. ${color106}Drawnix開源白板工具"
 	  echo -e "${gl_kjlan}107. ${color107}PanSou網盤搜尋${gl_kjlan}108. ${color108}LangBot聊天機器人"
@@ -12262,7 +12262,7 @@ while true; do
 			ip_address
 			echo "已經安裝完成"
 			check_docker_app_ip
-			echo "初始使用者名稱密碼均為: admin"
+			echo "初始使用者名稱密碼皆為: admin"
 		}
 
 		docker_app_update() {
@@ -14016,7 +14016,7 @@ while true; do
 
 		docker_app_install() {
 
-			read -e -p "設定 CPU 核數 (預設 2):" CPU_CORES
+			read -e -p "设置 CPU 核数 (默认 2): " CPU_CORES
 			local CPU_CORES=${CPU_CORES:-2}
 
 			read -e -p "設定記憶體大小 (預設 4G):" RAM_SIZE
@@ -14091,7 +14091,7 @@ while true; do
 
 	  101|moneyprinterturbo)
 		local app_id="101"
-		local app_name="AI影片產生工具"
+		local app_name="AI影片生成工具"
 		local app_text="MoneyPrinterTurbo是一款使用AI大模型合成高清短影片的工具"
 		local app_url="官方網站:${gh_https_url}github.com/harry0703/MoneyPrinterTurbo"
 		local docker_name="moneyprinterturbo"
@@ -14253,7 +14253,7 @@ while true; do
 
 		}
 
-		local docker_describe="是一款强大的开源白板工具，集成思维导图、流程图等。"
+		local docker_describe="是一款強大的開源白板工具，整合心智圖、流程圖等。"
 		local docker_url="官網介紹:${gh_https_url}github.com/plait-board/drawnix"
 		local docker_use=""
 		local docker_passwd=""
@@ -16102,14 +16102,14 @@ EOF
 			  echo "TG-bot監控預警功能"
 			  echo "影片介紹: https://youtu.be/vLL-eb3Z_TY"
 			  echo "------------------------------------------------"
-			  echo "您需要設定tg機器人API和接收預警的使用者ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
+			  echo "您需要設定tg機器人API和接收預警的用戶ID，即可實現本機CPU，內存，硬碟，流量，SSH登入的即時監控預警"
 			  echo "到達閾值後會向用戶發送預警訊息"
 			  echo -e "${gl_hui}-關於流量，重啟伺服器將重新計算-${gl_bai}"
 			  read -e -p "確定繼續嗎？ (Y/N):" choice
 
 			  case "$choice" in
 				[Yy])
-				  send_stats "電報預警啟用"
+				  send_stats "电报预警启用"
 				  cd ~
 				  install nano tmux bc jq
 				  check_crontab_installed
@@ -16453,7 +16453,7 @@ linux_file() {
 		echo "1. 進入目錄 2. 建立目錄 3. 修改目錄權限 4. 重新命名目錄"
 		echo "5. 刪除目錄 6. 返回上一層選單目錄"
 		echo "------------------------"
-		echo "11. 建立文件 12. 編輯文件 13. 修改文件權限 14. 重新命名文件"
+		echo "11. 建立檔案 12. 編輯檔案 13. 修改檔案權限 14. 重新命名文件"
 		echo "15. 刪除文件"
 		echo "------------------------"
 		echo "21. 壓縮檔案目錄 22. 解壓縮檔案目錄 23. 行動檔案目錄 24. 複製檔案目錄"
@@ -16530,7 +16530,7 @@ linux_file() {
 				send_stats "壓縮檔案/目錄"
 				;;
 			22) # 解压文件/目录
-				read -e -p "請輸入要解壓縮的檔名 (.tar.gz):" filename
+				read -e -p "請輸入要解壓縮的檔案名稱 (.tar.gz):" filename
 				install tar
 				tar -xzvf "$filename" && echo "已解壓縮$filename" || echo "解壓縮失敗"
 				send_stats "解壓縮檔案/目錄"
@@ -16955,7 +16955,7 @@ while true; do
 			CheckFirstRun_true
 			yinsiyuanquan2
 			cp -f ~/kejilion.sh /usr/local/bin/k > /dev/null 2>&1
-			echo -e "${gl_lv}腳本已更新至最新版本！${gl_huang}v$sh_v_new${gl_bai}"
+			echo -e "${gl_lv}腳本已更新到最新版本！${gl_huang}v$sh_v_new${gl_bai}"
 			send_stats "腳本已經最新$sh_v_new"
 			break_end
 			~/kejilion.sh
